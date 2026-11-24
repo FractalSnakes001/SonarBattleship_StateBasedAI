@@ -1,0 +1,28 @@
+﻿# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+
+# Build output
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.ilk
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# PDFs (source documents, not code)
+*.pdf
