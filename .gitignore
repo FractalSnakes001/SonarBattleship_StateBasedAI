@@ -7,6 +7,9 @@ Thumbs.db
 .vscode/
 *.suo
 *.user
+.classpath
+.project
+.settings/
 
 # Build output
 bin/
