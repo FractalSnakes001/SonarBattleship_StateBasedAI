@@ -6,6 +6,8 @@ import battleship.engine.Config;
 import battleship.engine.GameView;
 import battleship.engine.Placement;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -41,7 +43,13 @@ import java.util.Random;
  */
 
 
-
+/**
+ * (P)
+ *      - Added some basic private information we will be using everywhere
+ *      - Also we have a HashMap that is our cache if we want to store info between turns
+ * (/P)
+ * AI
+ */
 
 
 /**
@@ -51,13 +59,62 @@ import java.util.Random;
  */
 public final class AI {
 
+    
+
+
+    // Some basic info that will be static:
+    private static final int N = 7;
+    private static final int NUM_BOATS = 4;
+    private static final int[] BOAT_LENGTHS = {4, 3, 2, 2};
+    private static final int MAX_ACTIONS = 200;
+
+
+    //non static (diff everyturn or game):
+    private int turnCount = 0;
+    private int Sunk_Boats = 0;
+    
+
+    //We can cache into a hash table values that we have alredy checked, to avoid repeated calculations
+    private final Map<BeliefState, Double> cache = new HashMap<>();
+
+    // helper class Node of the tree of belief states.
+    private class Node {
+        BeliefState state;
+        double value;
+    }
+
+    /** (P)
+     * We Need an evalutaion function we can use the following info: (maybe more)
+     * isWon()
+     * getScore() 
+     * getNbrOfSunkBoats()
+     * getNbrOfStates()
+     * isSonarAvailable()
+     * getPercept(i)
+     * getIntactBoatProbabilities()
+     * getBoatProbabilities()
+     * getSonarBoatProbabilities()
+     * isHit()
+     * 
+     * 
+     * In the end we can just create multiple AI classes with different evaluation functions then pitch them one agains the other
+     * then pick the best one.
+     */
+
+
+
     /**
      * Chooses where to place your boats at the beginning of a game (your fleet and your sonar boat).
      * By default they are placed at random; you may change this.
+     * 
+     * Can be changed to pre-calculated/hardcoded solution later?
      */
     public Placement placeBoats(Config cfg, Random rnd) {
         return Placement.random(cfg, rnd);
     }
+
+
+
 
     /**
      * Chooses your next action: an optional silent move of one of your boats, and an attack (FIRE or SONAR).
